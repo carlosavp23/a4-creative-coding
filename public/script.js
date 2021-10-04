@@ -23,6 +23,10 @@ var sort = parseFloat(d5.options[d5.selectedIndex].value);
 var d6= document.getElementById("type");
 var type = parseFloat(d6.options[d6.selectedIndex].value);
 
+var div = d3.select("body").append("div")
+     .attr("class", "tooltip")
+     .style("opacity", 0);
+
 // set the dimensions of the canvas
 var margin = { top: 100, right: 100, bottom: 100, left: 100 },
   width = 1750 - margin.left - margin.right,
@@ -179,6 +183,8 @@ function update(newdata) {
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis)
     .selectAll("text")
+    .attr("stroke", "white")
+
     .style("text-anchor", "end")
     .attr("dx", "-.8em")
     .attr("dy", "-.55em")
@@ -189,12 +195,14 @@ function update(newdata) {
     .attr("class", "y axis")
     .call(yAxis)
     .append("text")
+    .attr("stroke", "white")
     .attr("transform", "rotate(-90)")
     .attr("y", 5)
     .attr("dy", ".71em")
     .style("text-anchor", "end")
-    .attr("stroke", "white")
-    .text("mass");
+    .text("mass")
+    .attr("stroke", "white");
+
 
   // Add bar chart
   svg
@@ -213,7 +221,27 @@ function update(newdata) {
     .attr("height", function(d) {
       return height - y(d.mass);
     })
-    .attr("fill", updateColor());
+    .attr("fill", updateColor())
+  
+     .on('mouseover', function (d, i) {
+          d3.select(this).transition()
+                .duration('100')
+                .attr("r", 7);
+          div.transition()
+               .duration(100)
+               .style("opacity", 1);
+          div.html(d.name)
+               .style("left", (d3.event.pageX + 150) + "px")
+               .style("top", (d3.event.pageY + 100) + "px");
+     })
+     .on('mouseout', function (d, i) {
+          d3.select(this).transition()
+               .duration('200')
+               .attr("r", 5);
+          div.transition()
+               .duration('200')
+               .style("opacity", 0);
+     });
   updateScale();
 }
 
@@ -226,7 +254,7 @@ var y = d3.scale.linear().range([height, 0]);
 var xAxis = d3.svg
   .axis()
   .scale(x)
-  .orient("bottom");
+  .orient("bottom")
 
 var yAxis = d3.svg
   .axis()
@@ -304,8 +332,26 @@ d3.json("data.json", function(error, data) {
       return height - y(d.mass);
     })
     .attr("fill", barColor)
-    .on('mouseover', tip.show)
-    .on('mouseout', tip.hide)
+  
+     .on('mouseover', function (d, i) {
+          d3.select(this).transition()
+                .duration('100')
+                .attr("r", 7);
+          div.transition()
+               .duration(100)
+               .style("opacity", 1);
+          div.html(d.name)
+               .style("left", (d3.event.pageX + 150) + "px")
+               .style("top", (d3.event.pageY + 100) + "px");
+     })
+     .on('mouseout', function (d, i) {
+          d3.select(this).transition()
+               .duration('200')
+               .attr("r", 5);
+          div.transition()
+               .duration('200')
+               .style("opacity", 0);
+     });
 
 
 });

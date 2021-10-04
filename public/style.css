@@ -10,6 +10,16 @@ h1 {
     font-family: Arial, Helvetica, sans-serif;
     color: lightgray
   }
+
+  #names {
+    font-size: 24px;
+    line-height: 40px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    color: red
+  }
+
+
   body {
     background-color: #2d3436;
     background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
@@ -50,23 +60,31 @@ h1 {
   }
   
   .axis path,
+.axis text,
   .axis line {
     fill: none;
     stroke: lightgray;
     shape-rendering: crispEdges;
   }
+
+
+
   .svg-container {
     display: inline-block;
     margin: 0 auto;
   }
-  .d3-tip {
-    line-height: 1;
-    font-weight: bold;
-    padding: 12px;
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    border-radius: 2px;
+div.tooltip {
+     position: absolute;
+     text-align: center;
+     padding: .2rem;
+     background: #313639;
+     color: #f9f9f9;
+     border: 0px;
+     border-radius: 8px;
+     pointer-events: none;
+     font-size: .7rem;
 }
+
 
 
   
